@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+    <basicRegistry id="basic" realm="WebRealm">
+        <user name="user" password="1234" />
+        <user name="admin" password="4321" />
+
+        <group name="ADMINS">
+            <member name="admin" />
+        </group>
+    </basicRegistry>
+</server>

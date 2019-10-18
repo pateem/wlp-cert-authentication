@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<server>
+    <applicationMonitor dropinsEnabled="false" updateTrigger="mbean" autoExpand="true"/>
+
+    <featureManager>
+        <feature>localConnector-1.0</feature>
+        <feature>jpa-2.2</feature>
+        <feature>servlet-4.0</feature>
+        <feature>concurrent-1.0</feature>
+        <feature>ejbLite-3.2</feature>
+        <feature>appSecurity-2.0</feature>
+        <feature>transportSecurity-1.0</feature>
+        <feature>ssl-1.0</feature>
+    </featureManager>
+
+    <include location="${server.config.dir}/basicRegistry.xml" onConflict="MERGE"/>
+
+    <keyStore id="defaultKeyStore" location="${server.config.dir}/resources/security/key.jks" type="JKS" password="{xor}LDo8Ki02KyY=" />
+    <keyStore id="defaultTrustStore" location="${server.config.dir}/resources/security/key.jks" type="JKS" password="{xor}LDo8Ki02KyY=" />
+
+
+    <ssl id="defaultSSLConfig" keyStoreRef="defaultKeyStore" trustStoreRef="defaultTrustStore" clientAuthentication="true" />
+
+    <logging consoleLogLevel="INFO" maxFileSize="30" maxFiles="10" traceSpecification="*=info:com.ibm.ws.ejbcontainer.timer.*=all=enabled:com.ibm.ws.ejbcontainer.timer.*=all=enabled"/>
+    <logging consoleLogLevel="INFO"/>
+
+
+    <webContainer deferServletLoad="false" invokeFlushAfterService="false"/>
+
+    <httpEndpoint id="defaultHttpEndpoint" httpPort="8080" httpsPort="9442" host="*"/>
+
+
+    <basicRegistry id="basic" realm="WebRealm">
+         <user name="user" password="1234" />
+         <user name="admin" password="2345" />
+
+        <group name="ADMINS">
+            <member name="admin" />
+        </group>
+    </basicRegistry>
+
+
+    <application id="security-demo"
+                 name="security-demo"
+                 context-root="/security"
+                 type="war"
+                 location="${server.config.dir}/apps/app.war">
+        <application-bnd>
+            <security-role name="AUTHENTICATED">
+                <special-subject type="ALL_AUTHENTICATED_USERS"/>
+            </security-role>
+            <security-role name="ADMINS">
+                <group name="ADMINS"/>
+            </security-role>
+        </application-bnd>
+    </application>
+
+</server>

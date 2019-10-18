@@ -1,0 +1,26 @@
+<assembly>
+    <id>wls</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <directory>src/deployment/wlp</directory>
+            <outputDirectory>app</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>target</directory>
+            <outputDirectory>app/apps</outputDirectory>
+            <includes>
+                <include>*.war</include>
+            </includes>
+        </fileSet>
+        <!--<fileSet>-->
+            <!--<directory>src/deployment/manifest</directory>-->
+            <!--<outputDirectory/>-->
+        <!--</fileSet>-->
+    </fileSets>
+</assembly>
+
